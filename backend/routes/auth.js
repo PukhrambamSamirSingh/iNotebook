@@ -5,7 +5,6 @@ const User = require("../models/User")
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
 const fetchuser = require("../middleware/fetchUser")
-const JWT_SECRET = "I am a good boy"
 
 //Create a user using POST "/api/auth/createuser". No login required
 router.post("/createuser", [
@@ -38,7 +37,7 @@ router.post("/createuser", [
                     id: user.id
                 }
             }
-            const authtoken = jwt.sign(data, JWT_SECRET)
+            const authtoken = jwt.sign(data, process.env.JWT_SECRET)
             success = true
             return res.status(200).json({ success, authtoken })
         } catch (error) {
@@ -73,7 +72,7 @@ router.post("/login", [
                     id: user.id
                 }
             }
-            const authtoken = jwt.sign(data, JWT_SECRET)
+            const authtoken = jwt.sign(data, process.env.JWT_SECRET)
             success = true
             res.send({ success, authtoken })
         } catch (error) {
